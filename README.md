@@ -9,25 +9,62 @@ A Python implementation for comparing options using LLM and web search integrati
 - Neutral, objective comparison reports with no final recommendations
 - Template-based query generation with Jinja2
 - Extensible pipeline design
-- Pre-configured API keys for immediate use
+- Secure API key management with environment variables
 
 ## Setup
 
-1. Install dependencies:
+### 1. Install Dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-2. API keys are pre-configured in the code:
-   - OpenAI API Key (fallback)
-   - Hugging Face API Key 
-   - Tavily API Key
+### 2. Configure API Keys
 
-3. The workflow uses `huggingface:mistralai/Mistral-7B-Instruct-v0.2` model by default.
+**Option A: Using .env file (Recommended)**
+1. Copy the example environment file:
+```bash
+cp .env.example .env
+```
+
+2. Edit `.env` and add your API keys:
+```bash
+OPENAI_API_KEY=your_openai_api_key_here
+HUGGINGFACE_API_KEY=your_huggingface_api_key_here
+TAVILY_API_KEY=your_tavily_api_key_here
+```
+
+**Option B: Set environment variables directly**
+```bash
+export OPENAI_API_KEY="your_openai_api_key_here"
+export HUGGINGFACE_API_KEY="your_huggingface_api_key_here"
+export TAVILY_API_KEY="your_tavily_api_key_here"
+```
+
+### 3. API Key Sources
+- **OpenAI API Key**: Get from [OpenAI Platform](https://platform.openai.com/api-keys)
+- **Hugging Face API Key**: Get from [Hugging Face Settings](https://huggingface.co/settings/tokens)
+- **Tavily API Key**: Get from [Tavily Console](https://app.tavily.com/)
+
+The workflow uses `huggingface:mistralai/Mistral-7B-Instruct-v0.2` model by default.
 
 ## Usage
 
-### Basic Usage
+### Command Line Interface
+```bash
+# Basic comparison
+python comparison_workflow.py Python JavaScript
+
+# With constraints
+python comparison_workflow.py -c "Performance,Learning curve" React Vue.js Angular
+
+# Using shell wrapper
+./run_comparison.sh "AWS Lambda" "Google Cloud Functions"
+./run_comparison.sh --constraints "Cost,Features" Docker Kubernetes
+```
+
+### Python API
+
+#### Basic Usage
 ```python
 from comparison_workflow import ComparisonWorkflow
 
@@ -40,7 +77,7 @@ result = workflow.run_comparison(options)
 print(result['comparison_report'])
 ```
 
-### Advanced Usage with Constraints
+#### Advanced Usage with Constraints
 ```python
 # Compare with specific constraints
 options = ["React", "Vue.js", "Angular"]
@@ -50,7 +87,7 @@ result = workflow.run_comparison(options, constraints)
 print(result['comparison_report'])
 ```
 
-### Full Result Structure
+#### Full Result Structure
 ```python
 result = workflow.run_comparison(["Option A", "Option B"])
 

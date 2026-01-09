@@ -1,0 +1,9 @@
+aisuite
+tavily-python
+jinja2
+pydantic
+openai
+huggingface_hub
+transformers
+torch
+python-dotenv
